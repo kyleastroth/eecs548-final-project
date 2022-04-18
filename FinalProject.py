@@ -10,9 +10,9 @@ st.write("##### In 2019, researchers at the University of California, Irvine col
 st.write('##### Idaho ranks fifth in US states for wildfire risk, and exposure to wildfire smoke particles can cause serious health risks, specifically for people with pre-existing conditions.')
 st.write('### Exploratory analysis of the dataset demographics')
 
-# data_path = os.path.abspath('export_dataframe.csv')
-# df = pd.read_csv(data_path)
-df = pd.read_csv('/home/kyleastroth/UMich/eecs548/export_dataframe.csv')
+data_path = os.path.abspath('export_dataframe.csv')
+df = pd.read_csv(data_path)
+# df = pd.read_csv('/home/kyleastroth/UMich/eecs548/export_dataframe.csv')
 
 
 base = alt.Chart(df).encode(
