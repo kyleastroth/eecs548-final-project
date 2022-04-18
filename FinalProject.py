@@ -1,3 +1,4 @@
+from turtle import title
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -10,10 +11,10 @@ st.write("##### In 2019, researchers at the University of California, Irvine col
 st.write('##### Idaho ranks fifth in US states for wildfire risk, and exposure to wildfire smoke particles can cause serious health risks, specifically for people with pre-existing conditions.')
 st.write('### Exploratory analysis of the dataset demographics')
 
-data_path = os.path.abspath('export_dataframe.csv')
+# data_path = os.path.abspath('export_dataframe.csv')
+# df = pd.read_csv(data_path)
+df = pd.read_csv('/home/kyleastroth/UMich/eecs548/export_dataframe.csv')
 
-#df = pd.read_csv('/home/kyleastroth/UMich/eecs548/export_dataframe.csv')
-df = pd.read_csv(data_path)
 
 base = alt.Chart(df).encode(
     theta=alt.Theta('count(Gender):Q', stack=True), 
@@ -105,8 +106,8 @@ bars = alt.Chart(df).mark_bar().encode(
     (datum.IncomeLevel != '0') &
     (datum.PublicHealthThreat != '0')
 ).properties(
-    height=150,
-    width=600
+    height=200,
+    width=822
 ).configure_axis(
     labelFontSize=12,
     titleFontSize=12
@@ -116,23 +117,30 @@ st.altair_chart(bars)
 
 st.write('#### Have you, or anyone in your household, experienced wildfire smoke-related illness?')
 
-base = alt.Chart(df).encode(
-    theta=alt.Theta('count(SmokeRelatedIllness):Q', stack=True), 
-    color=alt.Color("SmokeRelatedIllness:N", legend=None),
-    tooltip=[alt.Tooltip('count(SmokeRelatedIllness):Q', title="Num of Participants")]
-).transform_filter(
-    (datum.SmokeRelatedIllness != '0')
-)
+col1, col2, col3 = st.columns([3,6,1])
+with col1:
+    st.write("")
 
-pie = base.mark_arc(outerRadius=120)
-text = base.mark_text(radius=160, size=16).encode(text="SmokeRelatedIllness:N")
+with col2:
+    base = alt.Chart(df).encode(
+        theta=alt.Theta('count(SmokeRelatedIllness):Q', stack=True), 
+        color=alt.Color("SmokeRelatedIllness:N", legend=None),
+        tooltip=[alt.Tooltip('count(SmokeRelatedIllness):Q', title="Num of Participants")]
+    ).transform_filter(
+        (datum.SmokeRelatedIllness != '0')
+    )
 
-chart = pie + text
-# chart.configure_view(
-#     strokeWidth=0
-# )
+    pie = base.mark_arc(outerRadius=100)
+    text = base.mark_text(radius=140, size=16).encode(text="SmokeRelatedIllness:N")
 
-st.altair_chart(chart)
+    chart = pie + text
+    # chart.configure_view(
+    #     strokeWidth=0
+    # )
+    st.write(chart)
+
+with col3:
+    st.write("");
 
 st.write('#### Would participants consider evacuating due to wildfire smoke?')
 
