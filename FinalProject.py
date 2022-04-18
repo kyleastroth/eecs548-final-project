@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import altair as alt
 from altair import datum
+import os
 
 st.write("# Case Study: Boise, Idaho")
 st.write("### What is the public perception of the risks of wildfire smoke?")
@@ -9,7 +10,10 @@ st.write("##### In 2019, researchers at the University of California, Irvine col
 st.write('##### Idaho ranks fifth in US states for wildfire risk, and exposure to wildfire smoke particles can cause serious health risks, specifically for people with pre-existing conditions.')
 st.write('### Exploratory analysis of the dataset demographics')
 
-df = pd.read_csv('/home/kyleastroth/UMich/eecs548/export_dataframe.csv')
+data_path = os.path.abspath('export_dataframe.csv')
+
+#df = pd.read_csv('/home/kyleastroth/UMich/eecs548/export_dataframe.csv')
+df = pd.read_csv(data_path)
 
 base = alt.Chart(df).encode(
     theta=alt.Theta('count(Gender):Q', stack=True), 
