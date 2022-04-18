@@ -1,4 +1,3 @@
-from turtle import title
 import streamlit as st
 import pandas as pd
 import altair as alt
@@ -134,9 +133,9 @@ with col2:
     text = base.mark_text(radius=140, size=16).encode(text="SmokeRelatedIllness:N")
 
     chart = pie + text
-    # chart.configure_view(
-    #     strokeWidth=0
-    # )
+    chart.configure_view(
+        strokeWidth=0
+    )
     st.write(chart)
 
 with col3:
